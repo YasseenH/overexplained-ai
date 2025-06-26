@@ -1,14 +1,90 @@
+import { ChangeEventHandler, useState } from "react";
+
 export const SignupPage = () => {
-    return (
+  const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const onEmailChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+    setEmail(target.value);
+    setErrorMessage("");
+  };
+
+  const onSignupClick = async () => {
+    if (!email) {
+      setErrorMessage("Email is required.");
+      return;
+    }
+
+    console.log("Signing up with email:", email);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-blue-200 via-white to-blue-100 px-4 py-10 flex flex-col items-center justify-center">
+      {/* Animated entrance */}
+      <div className="w-full max-w-xl bg-white shadow-lg rounded-lg p-8 sm:p-10 space-y-6 text-center transition-all duration-700 ease-in-out animate-fade-in">
+        {/* Heading */}
         <div>
-            <h1>Newsletter Signup</h1>
-            <form>
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" required />
-                <button type="submit">Sign Up</button>
-            </form>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-gray-900">
+            Welcome to the{" "}
+            <span className="text-blue-500 whitespace-nowrap">
+              Newsletter Service
+            </span>
+          </h1>
+          <p className="mt-3 text-gray-600 text-base sm:text-lg">
+            Sign up below to get notified about our latest updates!
+          </p>
         </div>
-    );
+
+        {/* Email Input */}
+        <div className="text-left">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Email address
+          </label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={onEmailChange}
+            placeholder="you@example.com"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          {errorMessage && (
+            <p className="text-sm text-red-500 mt-1">{errorMessage}</p>
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <button
+          onClick={onSignupClick}
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md transition-colors duration-300"
+        >
+          Sign Up
+        </button>
+      </div>
+
+      {/* Testimonials */}
+      <div className="mt-12 max-w-2xl text-center px-4">
+        <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">
+          What our subscribers are saying:
+        </h2>
+        <div className="grid gap-6 sm:grid-cols-2 text-left">
+          <blockquote className="bg-white p-4 rounded-lg shadow text-gray-700 text-sm sm:text-base">
+            “I love getting these updates! Super helpful and always on time.”
+            <br />
+            <span className="mt-2 block text-xs text-gray-500">– Ali H.</span>
+          </blockquote>
+          <blockquote className="bg-white p-4 rounded-lg shadow text-gray-700 text-sm sm:text-base">
+            “The newsletter is beautifully designed and actually useful.”
+            <br />
+            <span className="mt-2 block text-xs text-gray-500">– Sid K.</span>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default SignupPage;
