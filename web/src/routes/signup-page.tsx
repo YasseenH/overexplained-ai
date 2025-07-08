@@ -1,7 +1,14 @@
 import { ChangeEventHandler, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../utils/constants";
+
+interface SignupResponsePayload {
+  message: string;
+}
 
 export const SignupPage = () => {
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
   const onEmailChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
@@ -16,6 +23,38 @@ export const SignupPage = () => {
     }
 
     console.log("Signing up with email:", email);
+
+    try {
+      const response = await fetch(`${API_URL}/newsletter/signup`, {
+        method: "POST",
+        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      let payload: SignupResponsePayload | null = null;
+
+      const contentType = response.headers.get("content-type") || "";
+
+      if (contentType.includes("application/json")) {
+        payload = await response.json();
+      } else {
+        // Response is not JSON — maybe server crashed
+        const text = await response.text();
+        console.error("Non-JSON response:", text);
+        return setErrorMessage("Something went wrong on the server.");
+      }
+
+      if (!response.ok) {
+        return setErrorMessage(payload?.message || "Invalid email, try again.");
+      }
+
+      return navigate("/confirm-email-sent", { state: { email } });
+    } catch (error: unknown) {
+      console.error(error);
+      setEmail("");
+    }
   };
 
   return (
@@ -27,7 +66,7 @@ export const SignupPage = () => {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-gray-900">
             Welcome to the{" "}
             <span className="text-blue-500 whitespace-nowrap">
-              Newsletter Service
+              Magic Conch
             </span>
           </h1>
           <p className="mt-3 text-gray-600 text-base sm:text-lg">
