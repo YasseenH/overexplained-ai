@@ -53,6 +53,7 @@ export const SignupPage = () => {
 
       if (!response.ok) {
         if (payload?.message) {
+          console.log("Signup error payload:", payload);
           const code = payload.message.split(":")[0]; // get "ERR-001"
           const msg = friendlyErrorMessages[code] || "Something went wrong.";
           return setErrorMessage(msg);
