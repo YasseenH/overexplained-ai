@@ -1,9 +1,11 @@
 import request from "supertest";
 import HttpStatus from "http-status";
 import { createServer } from "../../src/server";
+import { PrismaClient } from "@prisma/client";
 
 describe("health", () => {
-  const server = createServer().listen(80);
+  const prisma = new PrismaClient();
+  const server = createServer({ prisma }).listen(80);
 
   afterAll(async () => {
     server.close();

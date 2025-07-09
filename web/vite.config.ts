@@ -11,9 +11,9 @@ export default defineConfig({
     port: 3001,
     proxy: {
       "/api": {
-        target: `${process.env.VITE_APP_API_URL}`,
+        target: `${process.env.VITE_APP_API_URL}/v1`,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, "/v1"),
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

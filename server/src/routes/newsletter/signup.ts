@@ -1,25 +1,46 @@
-import { Request, Response } from 'express';
-import { isEmailValid } from '../../utils/email';
+import { Request, Response } from "express";
+import { isEmailValid } from "../../utils/email";
+import { PrismaClient } from "@prisma/client";
+import { upsertSubscriber } from "../../services/newsletter";
+import { ErrorCode } from "../../errors/api-error";
 
 interface SignupBody {
-    email?: string;
+  email?: string;
 }
 
-export const newsletterSignupHandler = () => (req: Request, res: Response) => {
+export const newsletterSignupHandler =
+  (prisma: PrismaClient) => async (req: Request, res: Response) => {
     try {
-        const {email = ""} = req.body as SignupBody;
+      const { email = "" } = req.body as SignupBody;
 
-        if (!email) {
-            throw new Error("Email is required");
-        }
-        if (!isEmailValid(email)) {
-            throw new Error("Email is invalid");
-        }
+      if (!email) {
+        throw new ErrorCode("ERR-001", "email");
+      }
+      if (!isEmailValid(email)) {
+        throw new ErrorCode("ERR-002", "email");
+      }
 
-        // IMPLETMENT SIGNUP LOGIC HERE
-        
-        return res.status(200).json({message: "Signed up successfully"});
-    } catch (error) {
-        throw new Error();
+      // Sign up the user by upserting the subscriber in the database
+      const newsletterSubscriber = await upsertSubscriber(prisma, email);
+
+      console.log("Newsletter subscriber upserted");
+
+      //Publish
+
+      return res.status(200).json(newsletterSubscriber);
+    } catch (error: unknown) {
+      if (!(error instanceof ErrorCode)) {
+        console.error("Error in newsletter signup handler:", error);
+        throw new Error(String(error));
+      }
+
+      if (["ERR-001", "ERR-002"].includes(error.code)) {
+        return res.status(400).json({
+          message: error.message,
+        });
+      }
+      return res.status(500).json({
+        message: "Internal Server Error",
+      });
     }
-}
+  };

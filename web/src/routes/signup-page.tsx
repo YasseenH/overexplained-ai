@@ -16,6 +16,11 @@ export const SignupPage = () => {
     setErrorMessage("");
   };
 
+  const friendlyErrorMessages: Record<string, string> = {
+    "ERR-001": "Email is required.",
+    "ERR-002": "Invalid email format.",
+  };
+
   const onSignupClick = async () => {
     if (!email) {
       setErrorMessage("Email is required.");
@@ -47,7 +52,13 @@ export const SignupPage = () => {
       }
 
       if (!response.ok) {
-        return setErrorMessage(payload?.message || "Invalid email, try again.");
+        if (payload?.message) {
+          const code = payload.message.split(":")[0]; // get "ERR-001"
+          const msg = friendlyErrorMessages[code] || "Something went wrong.";
+          return setErrorMessage(msg);
+        }
+
+        return setErrorMessage("Something went wrong.");
       }
 
       return navigate("/confirm-email-sent", { state: { email } });
@@ -65,9 +76,7 @@ export const SignupPage = () => {
         <div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-gray-900">
             Welcome to the{" "}
-            <span className="text-blue-500 whitespace-nowrap">
-              Magic Conch
-            </span>
+            <span className="text-blue-500 whitespace-nowrap">Magic Conch</span>
           </h1>
           <p className="mt-3 text-gray-600 text-base sm:text-lg">
             Sign up below to get notified about our latest updates!

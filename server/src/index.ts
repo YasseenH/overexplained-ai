@@ -1,8 +1,11 @@
+import { PrismaClient } from "@prisma/client";
 import { createServer } from "./server";
 
 const PORT = process.env.PORT || 8080;
 
-const server = createServer().listen(PORT, () => {
+const prisma = new PrismaClient();
+
+const server = createServer({ prisma }).listen(PORT, () => {
   console.log(`🚀 Server ready at: http://localhost:${PORT}`);
 });
 
