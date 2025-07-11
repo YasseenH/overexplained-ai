@@ -10,14 +10,16 @@ export const ErrorPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-100 via-white to-red-100 px-4 py-10 flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-b from-red-100 via-white to-red-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 py-10 flex flex-col items-center justify-center transition-colors duration-300">
       {/* Error Card */}
-      <div className="w-full max-w-xl bg-white shadow-lg rounded-lg p-8 sm:p-10 space-y-6 text-center animate-fade-in transition-all duration-700 ease-in-out">
-        <h1 className="text-4xl sm:text-5xl font-bold text-red-600">Oops!</h1>
-        <p className="text-gray-700 text-lg sm:text-xl">
+      <div className="w-full max-w-xl bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 sm:p-10 space-y-6 text-center animate-fade-in transition-all duration-700 ease-in-out">
+        <h1 className="text-4xl sm:text-5xl font-bold text-red-600 dark:text-red-400">
+          Oops!
+        </h1>
+        <p className="text-gray-700 dark:text-gray-200 text-lg sm:text-xl">
           Sorry, an unexpected error has occurred.
         </p>
-        <p className="text-sm text-gray-500 italic">
+        <p className="text-sm text-gray-500 dark:text-gray-400 italic">
           {message}
         </p>
         <a
