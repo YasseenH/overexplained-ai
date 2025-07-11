@@ -27,7 +27,7 @@ export const newsletterSignupHandler =
 
       //Publish
 
-      return res.status(200).json(newsletterSubscriber);
+      return res.status(201).json(newsletterSubscriber);
     } catch (error: unknown) {
       if (!(error instanceof ErrorCode)) {
         console.error("Error in newsletter signup handler:", error);
