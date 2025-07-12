@@ -1,8 +1,8 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { SignupPage, ErrorPage, ConfirmPage } from "./routes/index.ts";
+import React from "react";
 
 
 const router = createBrowserRouter([

@@ -3,13 +3,15 @@ import { isEmailValid } from "../../utils/email";
 import { PrismaClient } from "@prisma/client";
 import { upsertSubscriber } from "../../services/newsletter";
 import { ErrorCode } from "../../errors/api-error";
+import { PubSubService } from "../../services/pubsub/types";
 
 interface SignupBody {
   email?: string;
 }
 
 export const newsletterSignupHandler =
-  (prisma: PrismaClient) => async (req: Request, res: Response) => {
+  (prisma: PrismaClient, pubSub: PubSubService) =>
+  async (req: Request, res: Response) => {
     try {
       const { email = "" } = req.body as SignupBody;
 
@@ -26,6 +28,9 @@ export const newsletterSignupHandler =
       console.log("Newsletter subscriber upserted");
 
       //Publish
+      await pubSub.publish("newsletter-signup", { data: "Hello world" });
+
+      console.log("Newsletter signup event published");
 
       return res.status(201).json(newsletterSubscriber);
     } catch (error: unknown) {

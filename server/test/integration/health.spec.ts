@@ -2,10 +2,12 @@ import request from "supertest";
 import HttpStatus from "http-status";
 import { createServer } from "../../src/server";
 import { PrismaClient } from "@prisma/client";
+import { TestPubSub } from "../../src/services/pubsub/test-pubsub";
 
 describe("health", () => {
   const prisma = new PrismaClient();
-  const server = createServer({ prisma }).listen(80);
+  const pubSub = new TestPubSub();
+  const server = createServer({ prisma, pubSub }).listen(80);
 
   afterAll(async () => {
     server.close();

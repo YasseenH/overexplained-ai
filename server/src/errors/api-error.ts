@@ -3,6 +3,7 @@ export type Code = keyof typeof errors;
 const errors = {
   "ERR-001": "{#key} is required.",
   "ERR-002": "{#key} is invalid.",
+  "ERR-003": "Invalid Pubsub payload.",
 };
 
 export const getErrorDescription = (code: Code, key?: string) => {
