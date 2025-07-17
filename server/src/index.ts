@@ -1,15 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 import { createServer } from "./server";
-import { TestPubSub } from "./services/pubsub/test-pubsub";
 import { GooglePubSubService } from "./services/pubsub/gcp";
+import { ResendService } from "./services/mailer/resend";
 
 const PORT = process.env.PORT || 8080;
 
 const prisma = new PrismaClient();
 const pubSub = new GooglePubSubService(process.env.GCP_PROJECT_ID || "");
+const mailer = new ResendService({
+  apiKey: process.env.RESEND_API_KEY || "",
+  sender: process.env.RESEND_SENDER || "",
+});
 
-
-const server = createServer({ prisma, pubSub }).listen(PORT, () => {
+const server = createServer({ prisma, pubSub, mailer }).listen(PORT, () => {
   console.log(`🚀 Server ready at: http://localhost:${PORT}`);
 });
 

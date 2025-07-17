@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { isPubSubPayload } from "../../services/pubsub/gcp";
 import { ErrorCode } from "../../errors/api-error";
+import { MailerService } from "../../services/mailer/types";
 
-export const sendConfirmEmailHandler = async (
+export const sendConfirmEmailHandler = (mailer: MailerService) => async (
   request: Request,
   response: Response
 ) => {
@@ -26,6 +27,7 @@ export const sendConfirmEmailHandler = async (
 
     //send email
     console.log("sendConfirmHandler", parsedPayload);
+    await mailer.sendConfirmationEmail(parsedPayload);
 
     return response.status(200).json({
       message: "OK",

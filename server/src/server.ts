@@ -3,10 +3,12 @@ import { createHealthRouter } from "./routes/health";
 import { createNewsletterRouter } from "./routes/newsletter";
 import { PrismaClient } from "@prisma/client";
 import { PubSubService } from "./services/pubsub/types";
+import { MailerService } from "./services/mailer/types";
 
 interface CreateServerParams {
   prisma: PrismaClient;
   pubSub: PubSubService;
+  mailer: MailerService;
 }
 
 const errorHandler = (error: Error, req: Request, res: Response) => {
@@ -21,7 +23,7 @@ const errorHandler = (error: Error, req: Request, res: Response) => {
 // the server singleton
 let server: Express | null = null;
 
-export const createServer = ({ prisma, pubSub }: CreateServerParams): Express => {
+export const createServer = ({ prisma, pubSub, mailer }: CreateServerParams): Express => {
   if (server) return server;
 
   server = express();
@@ -32,7 +34,7 @@ export const createServer = ({ prisma, pubSub }: CreateServerParams): Express =>
 
   //routes
   server.use("/v1", createHealthRouter());
-  server.use("/v1", createNewsletterRouter(prisma, pubSub));
+  server.use("/v1", createNewsletterRouter(prisma, pubSub, mailer));
 
   server.use((req, res, next) => {
     next(new Error("Not found"));

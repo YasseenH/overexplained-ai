@@ -3,11 +3,13 @@ import HttpStatus from "http-status";
 import { createServer } from "../../src/server";
 import { PrismaClient } from "@prisma/client";
 import { TestPubSub } from "../../src/services/pubsub/test-pubsub";
+import TestMailer from "../../src/services/mailer/test-mailer";
 
 describe("health", () => {
   const prisma = new PrismaClient();
   const pubSub = new TestPubSub();
-  const server = createServer({ prisma, pubSub }).listen(80);
+  const mailer = new TestMailer();
+  const server = createServer({ prisma, pubSub, mailer }).listen(80);
 
   afterAll(async () => {
     server.close();

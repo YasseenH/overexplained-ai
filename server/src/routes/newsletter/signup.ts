@@ -28,7 +28,10 @@ export const newsletterSignupHandler =
       console.log("Newsletter subscriber upserted");
 
       //Publish
-      await pubSub.publish("newsletter-signup", { data: "Hello world" });
+      await pubSub.publish("newsletter-signup", {
+        email: newsletterSubscriber.email,
+        token: newsletterSubscriber.token,
+      });
 
       console.log("Newsletter signup event published");
 
