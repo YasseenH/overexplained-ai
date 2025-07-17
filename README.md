@@ -134,7 +134,7 @@ npx prisma db push
 
 ---
 
-## ✨ Future Enhancements
+## Future Enhancements
 
 - User dashboard to manage preferences and topics.
 - Admin panel to view engagement.
@@ -144,7 +144,7 @@ npx prisma db push
 
 ---
 
-## 📬 Author
+## Author
 
 Built by **Yasseen Hilal**  
 UT Austin | CS Student
