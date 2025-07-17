@@ -28,6 +28,9 @@ export const sendConfirmEmailHandler = (mailer: MailerService) => async (
     //send email
     console.log("sendConfirmHandler", parsedPayload);
     await mailer.sendConfirmationEmail(parsedPayload);
+    //   await mailer.sendWelcomeEmail({
+    //     email: parsedPayload.email,
+    //   });
 
     return response.status(200).json({
       message: "OK",
