@@ -18,6 +18,8 @@
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*"]
-    }
+    },
+    "lib": ["es6", "dom"],
+    "skipLibCheck": true
   }
 }

@@ -1,0 +1,38 @@
+substitutions:
+  _SERVICE_NAME: "newsletter-project"
+  _PATH: "."
+
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "us-south1-docker.pkg.dev/$PROJECT_ID/${_SERVICE_NAME}/newsletter-project",
+        "${_PATH}",
+      ]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "us-south1-docker.pkg.dev/$PROJECT_ID/${_SERVICE_NAME}/newsletter-project",
+      ]
+
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "run",
+        "deploy",
+        "newsletter-project",
+        "--image",
+        "us-south1-docker.pkg.dev/$PROJECT_ID/${_SERVICE_NAME}/newsletter-project",
+        "--region",
+        "us-south1",
+        "--platform",
+        "managed",
+        "--allow-unauthenticated",
+      ]
+
+images:
+  - "us-south1-docker.pkg.dev/$PROJECT_ID/${_SERVICE_NAME}/newsletter-project"
