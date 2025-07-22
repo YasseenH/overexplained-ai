@@ -13,6 +13,10 @@ export const ConfirmEmailPage = () => {
     const email = parsedParams.get("email");
     const token = parsedParams.get("token");
 
+    console.log("Search params:", params);
+    console.log("email:", email);
+    console.log("token:", token);
+
     if (!email || !token) return;
     console.log(
       "Confirming email with:",
