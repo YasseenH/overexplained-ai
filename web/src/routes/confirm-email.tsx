@@ -17,7 +17,7 @@ export const ConfirmEmailPage = () => {
 
     (async () => {
       try {
-        const response = await fetch(`${API_URL}/api/newsletter/confirm-email`, {
+        const response = await fetch(`${API_URL}/newsletter/confirm-email`, {
           method: "POST",
           body: JSON.stringify({ email, token }),
           headers: {
