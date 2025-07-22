@@ -13,15 +13,7 @@ export const ConfirmEmailPage = () => {
     const email = parsedParams.get("email");
     const token = parsedParams.get("token");
 
-    console.log("Search params:", params);
-    console.log("email:", email);
-    console.log("token:", token);
-
     if (!email || !token) return;
-    console.log(
-      "Confirming email with:",
-      `${API_URL}/newsletter/confirm-email`
-    );
 
     (async () => {
       try {
@@ -32,9 +24,6 @@ export const ConfirmEmailPage = () => {
             "Content-Type": "application/json",
           },
         });
-
-        const resultText = await response.text();
-        console.log("Confirm response:", response.status, resultText);
 
         setHasConfirmed(response.status === 200);
 
