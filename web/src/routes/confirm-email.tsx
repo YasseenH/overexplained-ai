@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { API_URL } from "../utils/constants";
 
 export const ConfirmEmailPage = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export const ConfirmEmailPage = () => {
 
     (async () => {
       try {
-        const response = await fetch(`/api/newsletter/confirm-email`, {
+        const response = await fetch(`${API_URL}/api/newsletter/confirm-email`, {
           method: "POST",
           body: JSON.stringify({ email, token }),
           headers: {
