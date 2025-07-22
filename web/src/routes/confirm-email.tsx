@@ -14,6 +14,7 @@ export const ConfirmEmailPage = () => {
     const token = parsedParams.get("token");
 
     if (!email || !token) return;
+    console.log("Confirming email with:", `${API_URL}/newsletter/confirm-email`);
 
     (async () => {
       try {
