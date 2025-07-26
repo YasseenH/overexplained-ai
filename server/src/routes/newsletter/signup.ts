@@ -4,26 +4,32 @@ import { PrismaClient } from "@prisma/client";
 import { upsertSubscriber } from "../../services/newsletter";
 import { ErrorCode } from "../../errors/api-error";
 import { PubSubService } from "../../services/pubsub/types";
+import { TopicKey } from "../../utils/topics";
 
 interface SignupBody {
   email?: string;
+  topics?: TopicKey[];
 }
 
 export const newsletterSignupHandler =
   (prisma: PrismaClient, pubSub: PubSubService) =>
   async (req: Request, res: Response) => {
     try {
-      const { email = "" } = req.body as SignupBody;
+      const { email = "", topics = [] } = req.body as SignupBody;
 
+      //validation 
       if (!email) {
         throw new ErrorCode("ERR-001", "email");
       }
       if (!isEmailValid(email)) {
         throw new ErrorCode("ERR-002", "email");
       }
+      if (topics.length === 0) {
+        throw new ErrorCode("ERR-001", "topics");
+      }
 
       // Sign up the user by upserting the subscriber in the database
-      const newsletterSubscriber = await upsertSubscriber(prisma, email);
+      const newsletterSubscriber = await upsertSubscriber(prisma, email, topics);
 
       console.log("Newsletter subscriber upserted");
 

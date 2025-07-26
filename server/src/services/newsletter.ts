@@ -1,23 +1,28 @@
 import { PrismaClient } from "@prisma/client";
 import crypto from "crypto";
 import { ErrorCode } from "../errors/api-error";
+import { TopicKey } from "../utils/topics";
 
-export const upsertSubscriber = async (prisma: PrismaClient, email: string) => {
+export const upsertSubscriber = async (
+  prisma: PrismaClient,
+  email: string,
+  topics: TopicKey[]
+) => {
   try {
     const newsletterSubscriber = await prisma.newsletterSubscriber.upsert({
-      where: {
-        email: email,
-      },
+      where: { email },
       create: {
         email,
         active: false,
         confirmed: false,
         token: createRandomToken(),
+        topics
       },
       update: {
         active: false,
         confirmed: false,
         token: createRandomToken(),
+        topics
       },
     });
 

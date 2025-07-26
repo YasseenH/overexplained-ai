@@ -4,7 +4,6 @@ import { PubSubService } from "../../services/pubsub/types";
 import { Request, Response } from "express";
 import { isEmailValid } from "../../utils/email";
 import { confirmSubscriber } from "../../services/newsletter";
-import { NOTFOUND } from "dns";
 
 interface ConfirmEmailPayload {
   email?: string;

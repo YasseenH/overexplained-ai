@@ -26,8 +26,6 @@ export const ConfirmEmailPage = () => {
         });
 
         setHasConfirmed(response.status === 200);
-
-        setHasConfirmed(response.status === 200);
       } catch (error) {
         console.error("Error confirming email:", error);
         setHasConfirmed(false);

@@ -19,6 +19,7 @@ model NewsletterSubscriber {
   token String
   confirmed Boolean
   active Boolean
+  topics String[] @default([])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

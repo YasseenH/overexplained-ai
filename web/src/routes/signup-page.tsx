@@ -1,6 +1,7 @@
 import { ChangeEventHandler, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/constants";
+import { TOPICS, TOPIC_LABELS, TopicKey } from "../../../shared/topics.ts";
 
 interface SignupResponsePayload {
   message: string;
@@ -8,8 +9,10 @@ interface SignupResponsePayload {
 
 export const SignupPage = () => {
   const [email, setEmail] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const [preferences, setPreferences] = useState<TopicKey[]>([]);
 
   const onEmailChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     setEmail(target.value);
@@ -21,9 +24,18 @@ export const SignupPage = () => {
     "ERR-002": "Invalid email format.",
   };
 
+  const toggle = (key: TopicKey) =>
+    setPreferences((p) =>
+      p.includes(key) ? p.filter((x) => x !== key) : [...p, key]
+    );
+
   const onSignupClick = async () => {
     if (!email) {
       setErrorMessage("Email is required.");
+      return;
+    }
+    if (preferences.length === 0) {
+      setErrorMessage("Please choose at least one topic.");
       return;
     }
 
@@ -32,7 +44,7 @@ export const SignupPage = () => {
     try {
       const response = await fetch(`${API_URL}/newsletter/signup`, {
         method: "POST",
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, topics: preferences }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -80,6 +92,34 @@ export const SignupPage = () => {
           </p>
         </div>
 
+        <div className="relative text-left">
+          <button
+            type="button"
+            onClick={() => setDropdownOpen((o) => !o)}
+            className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-4 py-2 text-left flex justify-between items-center"
+          >
+            {preferences.length > 0
+              ? `Selected (${preferences.length})`
+              : "Choose your topics"}
+            <span className="ml-2">▼</span>
+          </button>
+          {dropdownOpen && (
+            <div className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md p-4 max-h-60 overflow-auto shadow-lg">
+              {TOPICS.map((key) => (
+                <label key={key} className="flex items-center mb-2">
+                  <input
+                    type="checkbox"
+                    checked={preferences.includes(key)}
+                    onChange={() => toggle(key)}
+                    className="mr-2"
+                  />
+                  {TOPIC_LABELS[key]}
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+
         <div className="text-left">
           <label
             htmlFor="email"
@@ -116,12 +156,16 @@ export const SignupPage = () => {
           <blockquote className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-gray-700 dark:text-gray-300 text-sm sm:text-base">
             “I love getting these updates! Super helpful and always on time.”
             <br />
-            <span className="mt-2 block text-xs text-gray-500 dark:text-gray-400">– Ali H.</span>
+            <span className="mt-2 block text-xs text-gray-500 dark:text-gray-400">
+              – Ali H.
+            </span>
           </blockquote>
           <blockquote className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-gray-700 dark:text-gray-300 text-sm sm:text-base">
             “The newsletter is beautifully designed and actually useful.”
             <br />
-            <span className="mt-2 block text-xs text-gray-500 dark:text-gray-400">– Sid K.</span>
+            <span className="mt-2 block text-xs text-gray-500 dark:text-gray-400">
+              – Sid K.
+            </span>
           </blockquote>
         </div>
       </div>
