@@ -6,6 +6,7 @@ import { sendConfirmEmailHandler } from "./send-confirm-email";
 import { MailerService } from "../../services/mailer/types";
 import { confirmEmailHandler } from "./confirm-email";
 import { sendWelcomeEmailHandler } from "./send-welcome-email";
+import { sendNewsletterHandler } from "./send-newsletter";
 
 export const createNewsletterRouter = (
   prisma: PrismaClient,
@@ -28,6 +29,11 @@ export const createNewsletterRouter = (
   newsletterRouter.post(
     "/newsletter/send-welcome-email",
     sendWelcomeEmailHandler(mailer)
+  );
+
+  newsletterRouter.post(
+    "/newsletter/send-newsletter",
+    sendNewsletterHandler(mailer)
   );
 
   return newsletterRouter;
