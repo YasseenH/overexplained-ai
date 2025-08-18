@@ -18,7 +18,7 @@ export async function getOrCreateNewsletter(
       topic_date: { topic, date },
     },
   });
-  
+
   if (existing) {
     return existing.content;
   }
@@ -73,7 +73,8 @@ Remember: This should feel like a daily treat that readers look forward to with 
     max_tokens: 800,
   });
 
-  const content = completion.choices[0]?.message?.content || "Unable to generate content";
+  const content =
+    completion.choices[0]?.message?.content || "Unable to generate content";
 
   // save to database
   await prisma.dailyNewsletter.create({
@@ -97,7 +98,7 @@ async function runDaily() {
   // round-robin through each subscriber's topics
   for (const sub of subscribers) {
     const { email, topics, lastTopic } = sub;
-    
+
     if (topics.length === 0) {
       console.log(`[Scheduler] Subscriber ${email} has no topics, skipping`);
       continue;
@@ -123,12 +124,9 @@ async function runDaily() {
     });
     console.log(`    updated lastTopic for ${email} to ${nextIdx + 1}`);
   }
-  
+
   console.log("[Scheduler] Run complete");
 }
 
-// run the scheduler
-runDaily().catch((err) => {
-  console.error("Scheduler error:", err);
-  process.exit(1);
-});
+// export the function for manual execution (e.g., by Cloud Scheduler)
+export { runDaily };

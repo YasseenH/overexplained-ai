@@ -65,6 +65,22 @@ export const dailyNewsletterHandler =
     try {
       console.log("Daily newsletter job triggered by Cloud Scheduler");
 
+      const today = new Date().toISOString().slice(0, 10);
+
+      // check if we've already sent newsletters today by looking at existing content
+      const existingNewsletter = await prisma.dailyNewsletter.findFirst({
+        where: { date: today },
+      });
+
+      if (existingNewsletter) {
+        console.log(`Newsletters already sent today (${today}), skipping`);
+        return response.status(200).json({
+          message: "Newsletters already sent today",
+          processed: 0,
+          date: today,
+        });
+      }
+
       // get all confirmed and active subscribers
       const subscribers = await prisma.newsletterSubscriber.findMany({
         where: { confirmed: true, active: true },
@@ -81,7 +97,6 @@ export const dailyNewsletterHandler =
 
       console.log(`Found ${subscribers.length} active subscribers`);
 
-      const date = new Date().toISOString().slice(0, 10);
       let processedCount = 0;
 
       // process each subscriber
@@ -101,11 +116,15 @@ export const dailyNewsletterHandler =
           console.log(`Processing ${email}: topic #${topicIndex} "${topic}"`);
 
           // get or create content
-          const content = await getOrCreateNewsletter(topic, date);
+          const content = await getOrCreateNewsletter(topic, today);
           console.log(`    got content (${content.length} chars)`);
 
           // publish to pub/sub for async processing
-          await pubSub.publish("newsletter-daily", { email, topic, content });
+          await pubSub.publish("newsletter-daily", {
+            email,
+            topic,
+            content,
+          });
           console.log(`    published to pub/sub for ${email}`);
 
           // update subscriber's last topic
@@ -122,6 +141,17 @@ export const dailyNewsletterHandler =
         }
       }
 
+      // log that we've sent newsletters today by creating a daily newsletter record
+      if (processedCount > 0) {
+        await prisma.dailyNewsletter.create({
+          data: {
+            topic: "daily-batch",
+            date: today,
+            content: `Processed ${processedCount} subscribers on ${today}`,
+          },
+        });
+      }
+
       console.log(
         `Daily newsletter job completed. Processed ${processedCount} subscribers`
       );
@@ -130,6 +160,7 @@ export const dailyNewsletterHandler =
         message: "Daily newsletter job completed successfully",
         processed: processedCount,
         total: subscribers.length,
+        date: today,
       });
     } catch (error) {
       console.error("Error in daily newsletter job:", error);
