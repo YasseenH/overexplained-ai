@@ -2,21 +2,19 @@
 
 This is a full-stack newsletter signup system that allows users to subscribe via a web form and receive dynamic, AI-generated email content based on their selected topics. The system is designed for scalability, email deliverability, and modern UX.
 
----
-
 ## Features
 
 - **Email Confirmation Workflow**: Users confirm their email via a secure tokenized link.
 - **Welcome Email**: Beautifully styled welcome email sent after confirmation.
-- **AI-Generated Newsletters** (Upcoming):
+- **AI-Generated Newsletters**:
   - Personalized content using OpenAI APIs.
   - Subscribers choose topics of interest (e.g. tech, health, productivity).
-  - Generated content is relevant, high-quality, and curated weekly.
+  - Generated content is relevant, high-quality, and beautifully formatted.
 - **Pub/Sub Architecture**:
   - Decouples user signup from email delivery.
   - Uses Google Cloud Pub/Sub (mockable via DI) for event publishing.
 - **Resend Integration**:
-  - Used to send transactional emails (welcome + confirmation).
+  - Used to send transactional emails (welcome + confirmation + newsletters).
   - Fully decoupled via a `MailerService` interface.
 - **Prisma ORM**:
   - Manages subscriber data in a relational database (PostgreSQL/MySQL).
@@ -29,15 +27,15 @@ This is a full-stack newsletter signup system that allows users to subscribe via
 
 ## Tech Stack
 
-| Layer      | Tech                              |
-|-----------|------------------------------------|
-| Frontend  | Vite + React + Tailwind CSS        |
-| Backend   | Node.js + Express.js               |
-| DB        | Prisma ORM + MySQL/Postgres        |
-| Email     | [Resend](https://resend.com/) API  |
-| AI Engine | OpenAI API (GPT)                   |
-| Events    | Google Cloud Pub/Sub               |
-| Hosting   | Render / Vercel / Cloud Run        |
+| Layer     | Tech                              |
+| --------- | --------------------------------- |
+| Frontend  | Vite + React + Tailwind CSS       |
+| Backend   | Node.js + Express.js              |
+| DB        | Prisma ORM + MySQL/Postgres       |
+| Email     | [Resend](https://resend.com/) API |
+| AI Engine | OpenAI API (GPT-4o-mini)          |
+| Events    | Google Cloud Pub/Sub              |
+| Hosting   | Render / Vercel / Cloud Run       |
 
 ---
 
@@ -57,14 +55,30 @@ Emails are styled to be clean and modern, with support for branding, hover effec
 .
 ├── src/
 │   ├── email-templates/       # HTML email render functions
+│   │   ├── confirm.ts         # Confirmation email
+│   │   ├── welcome.ts         # Welcome email
+│   │   └── newsletter.ts      # Newsletter template
 │   ├── services/
 │   │   ├── resend/            # Mailer service implementation
 │   │   ├── pubsub/            # PubSub service interface
 │   │   └── newsletter.ts      # Signup/upsert logic
-│   ├── handlers/              # Express route handlers
+│   ├── routes/
+│   │   └── newsletter/
+│   │       ├── signup.ts      # User signup
+│   │       ├── confirm-email.ts # Email confirmation
+│   │       ├── send-welcome-email.ts # Welcome email
+│   │       ├── send-newsletter.ts # Newsletter delivery
+│   │       └── unsubscribe.ts # Unsubscribe endpoint
+│   ├── scheduler/
+│   │   └── newsletter-scheduler.ts: Better AI prompts
 │   └── utils/                 # Constants, validation
 ├── prisma/                    # Prisma schema & migrations
 ├── .env                       # Environment configs
+└── web/                      # React frontend
+    └── src/
+        └── routes/
+            ├── signup-page.tsx # Main signup form
+            └── unsubscribe.tsx # Unsubscribe page
 ```
 
 ---
@@ -77,13 +91,15 @@ Add these in a `.env` file:
 RESEND_API_KEY=your_resend_key
 RESEND_SENDER=Your Brand <team@yourdomain.com>
 APP_URL=https://your-app-url.com
+OPENAI_API_KEY=your_openai_key
+GCP_PROJECT_ID=your_gcp_project_id
 ```
 
 ---
 
 ## Example Signup Flow
 
-1. User visits frontend and enters email.
+1. User visits frontend and enters email + selects topics.
 2. Backend validates email and upserts subscriber.
 3. A Pub/Sub message is published with user email + token.
 4. A subscriber (worker or listener) handles the event and:
@@ -95,14 +111,14 @@ APP_URL=https://your-app-url.com
 
 ---
 
-## AI Newsletter (Planned)
+## AI Newsletter Generation
 
 - Users select preferred topics during or after signup.
-- The backend runs a scheduled job (e.g. weekly cron):
+- The backend runs a scheduled job (e.g. daily cron):
   - Pulls user preferences.
-  - Queries AI for summaries, trends, or tips.
-  - Compiles content into an HTML email.
-- Emails are personalized and engaging.
+  - Queries AI for engaging, structured content.
+  - Formats content using the beautiful newsletter template.
+- Emails are personalized, engaging, and professionally formatted.
 
 ---
 
