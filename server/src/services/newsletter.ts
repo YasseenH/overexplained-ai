@@ -16,13 +16,13 @@ export const upsertSubscriber = async (
         active: false,
         confirmed: false,
         token: createRandomToken(),
-        topics
+        topics,
       },
       update: {
         active: false,
         confirmed: false,
         token: createRandomToken(),
-        topics
+        topics,
       },
     });
 
@@ -48,9 +48,9 @@ export const confirmSubscriber = async (
     throw new ErrorCode("ERR-001", "token");
   }
 
-  const updatedSubscriber = prisma.newsletterSubscriber.update({
+  const updatedSubscriber = await prisma.newsletterSubscriber.update({
     where: { email },
-    data: { confirmed: true, token: "" },
+    data: { confirmed: true, active: true, token: "" },
   });
 
   return updatedSubscriber;

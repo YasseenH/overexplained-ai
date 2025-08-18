@@ -17,7 +17,7 @@ export const newsletterSignupHandler =
     try {
       const { email = "", topics = [] } = req.body as SignupBody;
 
-      //validation 
+      //validation
       if (!email) {
         throw new ErrorCode("ERR-001", "email");
       }
@@ -28,18 +28,18 @@ export const newsletterSignupHandler =
         throw new ErrorCode("ERR-001", "topics");
       }
 
-      // Sign up the user by upserting the subscriber in the database
-      const newsletterSubscriber = await upsertSubscriber(prisma, email, topics);
+      // sign up the user by upserting the subscriber in the database
+      const newsletterSubscriber = await upsertSubscriber(
+        prisma,
+        email,
+        topics
+      );
 
-      console.log("Newsletter subscriber upserted");
-
-      //Publish
+      // publish signup event
       await pubSub.publish("newsletter-signup", {
         email: newsletterSubscriber.email,
         token: newsletterSubscriber.token,
       });
-
-      console.log("Newsletter signup event published");
 
       return res.status(201).json(newsletterSubscriber);
     } catch (error: unknown) {

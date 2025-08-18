@@ -1,7 +1,12 @@
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { SignupPage, ErrorPage, ConfirmPage } from "./routes/index.ts";
+import {
+  SignupPage,
+  ErrorPage,
+  ConfirmPage,
+  UnsubscribePage,
+} from "./routes/index.ts";
 import React from "react";
 import { ConfirmEmailPage } from "./routes/confirm-email.tsx";
 
@@ -19,6 +24,11 @@ const router = createBrowserRouter([
   {
     path: "/confirm-email",
     element: <ConfirmEmailPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/unsubscribe",
+    element: <UnsubscribePage />,
     errorElement: <ErrorPage />,
   },
 ]);

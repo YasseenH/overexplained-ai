@@ -8,6 +8,7 @@ import {
 import { APP_URL } from "../../utils/constants";
 import { renderWelcomeEmail } from "../../email-templates/welcome";
 import { renderConfirmationEmail } from "../../email-templates/confirm";
+import { renderNewsletterEmail } from "../../email-templates/newsletter";
 
 interface ResendServiceConfig {
   sender: string;
@@ -59,15 +60,16 @@ export class ResendService implements MailerService {
     topic,
     content,
   }: SendNewsletterEmailPayload): Promise<void> {
-    const subject = `Your Daily Newsletter on ${topic}`;
-    const html = `
-      <div>
-        <h1>${topic}</h1>
-        <div>${content}</div>
-        <hr/>
-        <p>If you’d rather not receive these, click <a href="${APP_URL}/unsubscribe?email=${email}">here</a>.</p>
-      </div>
-    `;
+    const unsubscribeUrl = `${APP_URL}/unsubscribe?email=${email}`;
+    const { subject, html } = renderNewsletterEmail(
+      topic,
+      content,
+      unsubscribeUrl
+    );
+
+    if (!email) throw new Error("Missing email address");
+
+    console.log("Sending newsletter email to:", email);
     await this.resend.emails.send({
       from: this.sender,
       to: email,

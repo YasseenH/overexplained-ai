@@ -24,7 +24,7 @@ export const sendNewsletterHandler =
       // send the newsletter email
       await mailer.sendNewsletterEmail({ email, topic, content });
 
-      // sucess
+      // success
       return res.status(200).json({ message: "OK" });
     } catch (err: unknown) {
       if (err instanceof ErrorCode && err.code === "ERR-003") {

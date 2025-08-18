@@ -29,9 +29,11 @@ export const confirmEmailHandler =
 
       await confirmSubscriber(prisma, email, token);
 
+      // publish confirmation event
       await pubSub.publish("newsletter-email-confirmed", {
         email,
       });
+
       return response
         .status(200)
         .json({
@@ -40,7 +42,7 @@ export const confirmEmailHandler =
         .send();
     } catch (error: unknown) {
       if (!(error instanceof ErrorCode)) {
-        console.error("Error in newsletter confirm-email handler:", error);
+        console.error("Error in confirm-email handler:", error);
         throw new Error(String(error));
       }
 

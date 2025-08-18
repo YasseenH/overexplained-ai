@@ -23,38 +23,49 @@ export class GooglePubSubService implements PubSubService {
   private client: PubSub;
 
   constructor(private projectId: string) {
-    this.client = new PubSub({ projectId: this.projectId });
+    try {
+      console.log("Pub/Sub service initialized for project:", projectId);
+      this.client = new PubSub({
+        projectId: this.projectId,
+      });
+    } catch (error) {
+      console.error("Error initializing Pub/Sub client:", error);
+      throw error;
+    }
   }
+
   async publish(
     topicId: string,
     payload: Record<string, unknown>
   ): Promise<string> {
-    const topicName = `projects/${this.projectId}/topics/${topicId}-${NODE_ENV}`;
-    const exists = await this.checkTopicExists(topicName);
+    try {
+      const topicName = `projects/${this.projectId}/topics/${topicId}-${NODE_ENV}`;
+      console.log("Publishing to topic:", topicName);
 
-    if (!exists) {
-      throw new Error(`Topic ${topicName} does not exist`);
+      // get the topic (or create it if it doesn't exist)
+      const topic = this.client.topic(topicName);
+
+      // publish the message
+      const result = await topic.publishMessage({
+        data: GooglePubSubService.preparePublishPayload(payload),
+      });
+
+      console.log(
+        "Message published successfully to GCP Pub/Sub, message ID:",
+        result
+      );
+      return result;
+    } catch (error) {
+      console.error("Error in publish:", error);
+      throw error;
     }
-
-    const topic = this.client.topic(topicName);
-    return topic.publishMessage({
-      data: GooglePubSubService.preparePublishPayload(payload),
-    });
   }
 
-  //helper
   static preparePublishPayload(payload: Record<string, unknown>): Buffer {
     const jsonPayload = JSON.stringify(payload);
     return Buffer.from(jsonPayload);
   }
 
-  //helper
-  async checkTopicExists(topicName: string) {
-    const [topicList] = await this.client.getTopics();
-    return !!topicList.find((it) => it.name === topicName);
-  }
-
-  //helper
   validatePayload(payload: Record<string, unknown>): boolean {
     return isPubSubPayload(payload);
   }
