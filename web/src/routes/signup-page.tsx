@@ -94,7 +94,7 @@ export const SignupPage = () => {
       <div className="w-full max-w-4xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-12">
-        <div className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-wide mb-4">
+          <div className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-wide mb-4">
             Learn Things
           </div>
           <div className="mb-6">
