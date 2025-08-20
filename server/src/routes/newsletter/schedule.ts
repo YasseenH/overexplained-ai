@@ -19,7 +19,17 @@ export const scheduleNewsletterHandler =
       const date = new Date().toISOString().slice(0, 10);
 
       try {
-        // get or create newsletter content
+        // check if subscriber exists
+        const subscriber = await prisma.newsletterSubscriber.findUnique({
+          where: { email },
+        });
+
+        if (!subscriber) {
+          return response.status(404).json({
+            message: "Subscriber not found. Please sign up first.",
+          });
+        }
+
         const content = await getOrCreateNewsletter(topic, date);
         console.log(`    got content (${content.length} chars)`);
 
@@ -27,18 +37,15 @@ export const scheduleNewsletterHandler =
         await pubSub.publish("newsletter-daily", { email, topic, content });
         console.log("Newsletter scheduled and published");
 
-        // update subscriber's last topic
-        await prisma.newsletterSubscriber.update({
-          where: { email },
-          data: {
-            lastTopic:
-              (
-                await prisma.newsletterSubscriber.findUnique({
-                  where: { email },
-                })
-              )?.lastTopic || 0 + 1,
-          },
-        });
+        // update last topic if they have topics
+        if (subscriber.topics && subscriber.topics.length > 0) {
+          await prisma.newsletterSubscriber.update({
+            where: { email },
+            data: {
+              lastTopic: (subscriber.lastTopic || 0) + 1,
+            },
+          });
+        }
 
         return response.status(200).json({
           message: "Newsletter scheduled successfully",

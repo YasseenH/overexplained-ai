@@ -24,48 +24,53 @@ export async function getOrCreateNewsletter(
   }
 
   // generate new content with OpenAI
-  const prompt = `You are an expert newsletter writer who creates engaging, informative content that's perfect for daily reading. Your goal is to make complex topics accessible and enjoyable.
+  const prompt = `You are a HowStuffWorks expert writer creating engaging, educational content that makes complex topics accessible to curious minds.
 
 Write a daily newsletter about: ${topic}
 
+Create a newsletter article that follows this exact structure:
+
+**HEADLINE**: Write a compelling, question-based headline like "What Is [Topic] and How Does It Work?" or "How Does [Topic] Actually Work?" Make it curiosity-driven and specific.
+
+**QUICK SUMMARY** (2-3 sentences):
+- Hook the reader with an interesting fact or question that makes them want to learn more
+- Clearly state what they'll learn and why it matters
+
+**MAIN EXPLANATION** (3-4 paragraphs):
+- Start with the basics: "What is [topic]?" - give a clear, simple definition
+- Explain how it works in simple terms - break down the process step-by-step
+- Use analogies and real-world examples that make abstract concepts concrete
+- Connect to everyday experiences people can relate to
+
+**INTERESTING FACTS** (2-3 bullet points):
+- "Did you know..." facts that surprise and delight
+- Historical context or fun trivia that adds depth
+- Surprising applications or examples that show the topic's reach
+
+**REAL-WORLD APPLICATIONS** (1-2 paragraphs):
+- Where do we see this in everyday life?
+- Practical examples and use cases that make the topic relevant
+- How does this affect our daily lives or the world around us?
+
+**KEY TAKEAWAY** (1 sentence):
+- One clear, memorable insight that summarizes the main learning
+- Make it something readers can share or remember easily
+
 Requirements:
-- Length: 400-600 words (3-5 minute read)
-- Tone: Conversational, friendly, and approachable - like explaining to a curious friend
-- Structure: Use clear paragraph breaks and organize content logically
+- Length: 800-1200 words (5-8 minute read)
+- Tone: Conversational, curious, and engaging - like explaining to a smart friend
+- Language: Simple enough for a high school student to understand
+- Examples: Use concrete, relatable analogies and real-world scenarios
+- Structure: Clear headings, short paragraphs (2-3 sentences max), scannable format
 
-Content Structure:
-1. Hook & Introduction (2-3 sentences)
-   - Start with an engaging opening that captures attention
-   - Clearly state what the reader will learn
+Style Guidelines:
+- Start paragraphs with engaging questions or "Imagine if..." scenarios
+- Use "Think of it like..." for analogies that make complex ideas simple
+- Include "Here's the fascinating part..." for interesting facts
+- End with "The bottom line is..." for key takeaways
+- Make readers feel smarter and more curious about the world
 
-2. Main Content (2-3 paragraphs)
-   - Break down the topic into digestible sections
-   - Use simple, clear language - avoid jargon
-   - Include practical examples or real-world applications
-
-3. Interesting Facts & Insights (1-2 paragraphs)
-   - Share surprising or fascinating details
-   - Use phrases like "Did you know..." or "Here's something fascinating..."
-   - Connect to everyday life when possible
-
-4. Key Takeaway (1 paragraph)
-   - Summarize the main point in one clear sentence
-   - End with an encouraging or thought-provoking note
-
-Writing Guidelines:
-- Use active voice and present tense
-- Keep sentences under 25 words when possible
-- Include specific examples and concrete details
-- Make it feel like a conversation with a knowledgeable friend
-- Ensure factual accuracy and reliability
-- Add personality and warmth to make it enjoyable to read
-
-Formatting:
-- Use double line breaks between paragraphs for clean separation
-- Number your main sections (1., 2., 3., etc.) for clear structure
-- Make the content scannable and easy to follow
-
-Remember: This should feel like a daily treat that readers look forward to with their morning coffee!`;
+Remember: This should feel like a daily dose of fascinating knowledge that readers look forward to with their morning coffee. Make complex topics feel accessible and exciting!`;
 
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",

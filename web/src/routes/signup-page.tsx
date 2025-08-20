@@ -94,34 +94,36 @@ export const SignupPage = () => {
       <div className="w-full max-w-4xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <div className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-wide mb-4">
-            Start Your Day Smarter
+        <div className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-wide mb-4">
+            Learn Things
           </div>
           <div className="mb-6">
             <span className="text-3d whitespace-nowrap text-4xl sm:text-5xl">
               Overexplained
             </span>
           </div>
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium">
-            Get AI-powered newsletters delivered daily. Learn something new
-            every morning with engaging content tailored to your interests.
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">
+            Your daily dose of mind expanding knowledge. Complex topics
+            explained simply, fascinating facts revealed, and real world
+            connections made, all in a beautiful five to eight minute read that
+            fits perfectly with your morning routine.
           </p>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        {/* Top Grid */}
+        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
           {/* Signup Form */}
-          <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 sm:p-10 space-y-6">
+          <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 sm:p-10 space-y-6 h-full flex flex-col">
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                Join Our Community
+                Join the Curious Minds Club
               </h2>
               <p className="text-gray-600 dark:text-gray-300 font-medium">
-                It only takes 30 seconds to get started
+                Start your daily learning journey in just 30 seconds
               </p>
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-5 flex-1">
               {/* Topics Selection */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
@@ -206,7 +208,7 @@ export const SignupPage = () => {
                 className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 text-lg"
               >
                 {preferences.length > 0 && email
-                  ? "Get My Daily Newsletters"
+                  ? "Start Learning Every Day"
                   : "Choose topics and enter email"}
               </button>
 
@@ -250,100 +252,119 @@ export const SignupPage = () => {
             </div>
           </div>
 
-          {/* Benefits Section */}
-          <div className="space-y-6">
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 text-center">
-                What You'll Get
-              </h3>
-              <div className="space-y-5">
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg
-                      className="w-5 h-5 text-blue-600 dark:text-blue-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 dark:text-white mb-1">
-                      Daily Delivery
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">
-                      Fresh newsletters every morning at 9 AM UTC, perfect with
-                      your coffee
-                    </p>
-                  </div>
+          {/* Why Overexplained */}
+          <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 h-full flex flex-col">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+              Why Overexplained?
+            </h3>
+            <div className="space-y-5 flex-1">
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg
+                    className="w-5 h-5 text-blue-600 dark:text-blue-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                    />
+                  </svg>
                 </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg
-                      className="w-5 h-5 text-purple-600 dark:text-purple-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 dark:text-white mb-1">
-                      AI-Generated Content
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">
-                      Engaging, informative content written by advanced AI
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg
-                      className="w-5 h-5 text-green-600 dark:text-green-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 dark:text-white mb-1">
-                      Personalized Topics
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">
-                      Choose what interests you and we'll cycle through topics
-                    </p>
-                  </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 dark:text-white mb-1">
+                    HowStuffWorks Style Learning
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">
+                    Complex topics broken down into digestible, engaging
+                    explanations that make you feel smarter
+                  </p>
                 </div>
               </div>
-            </div>
 
-            {/* Social Proof */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 text-center">
-              <p className="text-gray-700 dark:text-gray-300 text-sm font-medium">
-                <span className="font-bold">Join thousands</span> of curious
-                minds who start their day with AI-powered insights
-              </p>
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg
+                    className="w-5 h-5 text-purple-600 dark:text-purple-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 dark:text-white mb-1">
+                    Perfect Morning Routine
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">
+                    Fresh newsletters every morning at 9 AM UTC, designed to be
+                    read with your coffee
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg
+                    className="w-5 h-5 text-green-600 dark:text-green-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 dark:text-white mb-1">
+                    Curated Topic Variety
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">
+                    From AI breakthroughs to ancient history, choose what
+                    fascinates you most
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg
+                    className="w-5 h-5 text-yellow-600 dark:text-yellow-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 dark:text-white mb-1">
+                    AI Powered Insights
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">
+                    Advanced AI crafts engaging content that is both educational
+                    and entertaining
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
