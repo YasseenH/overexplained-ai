@@ -20,9 +20,9 @@ export function renderNewsletterEmail(
         <title>Daily Newsletter - ${topicLabel}</title>
         <style>
           .newsletter-container { max-width: 600px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-          .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center; color: white; }
-          .brand-name { font-size: 32px; font-weight: 700; margin: 0 0 10px 0; letter-spacing: -1px; }
-          .tagline { font-size: 18px; margin: 0; opacity: 0.9; font-weight: 300; }
+          .header { background: transparent; padding: 24px 0; text-align: center; color: inherit; }
+          .brand-name { font-size: 32px; font-weight: 700; margin: 0 0 10px 0; letter-spacing: -1px; color: #667eea; }
+          .tagline { font-size: 18px; margin: 0; font-weight: 300; color: #64748b; }
           .main-content { background: #ffffff; padding: 40px 30px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); }
           .topic-badge { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 10px 20px; border-radius: 25px; font-size: 14px; font-weight: 600; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
           .topic-description { color: #64748b; font-size: 16px; margin-bottom: 30px; font-style: italic; }

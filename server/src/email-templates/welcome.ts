@@ -58,16 +58,9 @@ export function renderWelcomeEmail() {
             <p style="font-size: 16px; color: #64748b; margin-bottom: 15px;">
               Ready to start learning something new every day?
             </p>
-            <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px 30px; border-radius: 25px; display: inline-block; font-weight: 600;">
-              You're All Set!
-            </div>
           </div>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e2e8f0;" />
-          
-          <p style="font-size: 14px; color: #94a3b8; text-align: center; margin: 0;">
-            If you have any questions or want to adjust your topic preferences, just reply to this email. We're here to make your learning journey amazing!
-          </p>
           
           <p style="font-size: 12px; color: #cbd5e1; text-align: center; margin: 20px 0 0 0;">
             Delivered by Overexplained
