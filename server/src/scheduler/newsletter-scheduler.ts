@@ -28,49 +28,56 @@ export async function getOrCreateNewsletter(
 
 Write a daily newsletter about: ${topic}
 
-Create a newsletter article that follows this exact structure:
+Create a newsletter article that follows this EXACT structure with these EXACT markers:
 
-**HEADLINE**: Write a compelling, question-based headline like "What Is [Topic] and How Does It Work?" or "How Does [Topic] Actually Work?" Make it curiosity-driven and specific.
+**TITLE**: Write a compelling, question-based headline like "What Is [Topic] and How Does It Work?" or "How Does [Topic] Actually Work?" Make it curiosity-driven and specific.
 
-**QUICK SUMMARY** (2-3 sentences):
-- Hook the reader with an interesting fact or question that makes them want to learn more
-- Clearly state what they'll learn and why it matters
+**INTRO**: Write 2-3 sentences that hook the reader and clearly state what they'll learn and why it matters.
 
-**MAIN EXPLANATION** (3-4 paragraphs):
-- Start with the basics: "What is [topic]?" - give a clear, simple definition
-- Explain how it works in simple terms - break down the process step-by-step
-- Use analogies and real-world examples that make abstract concepts concrete
-- Connect to everyday experiences people can relate to
+**UNDERSTANDING**: Write 2-3 paragraphs explaining the basics. Start with "What is [topic]?" and break down how it works in simple terms using analogies and real-world examples.
 
-**INTERESTING FACTS** (2-3 bullet points):
-- "Did you know..." facts that surprise and delight
-- Historical context or fun trivia that adds depth
-- Surprising applications or examples that show the topic's reach
+**REAL LIFE**: Write 1-2 paragraphs with concrete examples and scenarios that people can relate to in their daily lives.
 
-**REAL-WORLD APPLICATIONS** (1-2 paragraphs):
-- Where do we see this in everyday life?
-- Practical examples and use cases that make the topic relevant
-- How does this affect our daily lives or the world around us?
+**DID YOU KNOW**: Write 2-3 paragraphs with fascinating facts, historical context, and surprising applications. Use "Did you know..." and "Here's the fascinating part..." to introduce facts.
 
-**KEY TAKEAWAY** (1 sentence):
-- One clear, memorable insight that summarizes the main learning
-- Make it something readers can share or remember easily
+**WHERE WE SEE THIS**: Write 1-2 paragraphs about practical applications and real-world use cases that make the topic relevant to everyday life.
+
+**KEY TAKEAWAY**: Write 1 clear, memorable sentence that summarizes the main learning.
 
 Requirements:
 - Length: 800-1200 words (5-8 minute read)
 - Tone: Conversational, curious, and engaging - like explaining to a smart friend
 - Language: Simple enough for a high school student to understand
 - Examples: Use concrete, relatable analogies and real-world scenarios
-- Structure: Clear headings, short paragraphs (2-3 sentences max), scannable format
+- Structure: Follow the EXACT markers above - no variations
 
-Style Guidelines:
-- Start paragraphs with engaging questions or "Imagine if..." scenarios
+Writing Style:
+- Use clear, direct language and avoid complex terminology
+- Aim for a Flesch reading score of 80 or higher
+- Use the active voice
+- Avoid adverbs
+- Do not use m-dashes or em-dashes
+- Avoid AI markers or overly formal language
+- Avoid buzzwords and instead use plain English
+- Use jargon only where relevant and immediately explain it
+- Avoid being salesy or overly enthusiastic and instead express calm confidence
+- Write like a knowledgeable friend explaining something fascinating
+- Keep sentences concise and paragraphs focused
 - Use "Think of it like..." for analogies that make complex ideas simple
 - Include "Here's the fascinating part..." for interesting facts
 - End with "The bottom line is..." for key takeaways
-- Make readers feel smarter and more curious about the world
 
-Remember: This should feel like a daily dose of fascinating knowledge that readers look forward to with their morning coffee. Make complex topics feel accessible and exciting!`;
+Formatting Rules:
+- Do NOT start any paragraph with a colon (:)
+- Do NOT use bold formatting in the content text
+- Only use the EXACT section markers listed above
+- Use plain text for all content paragraphs
+- Do NOT use bullet points (- or •) anywhere in the content
+- Write all content as flowing paragraphs, even for lists of facts
+- Ensure clean paragraph breaks between sections
+- Each section should flow naturally from one paragraph to the next
+
+Remember: This should feel like a daily dose of fascinating knowledge that readers look forward to with their morning coffee. Make complex topics feel accessible and exciting while maintaining a calm, confident tone. Write everything as natural paragraphs, not as lists or bullet points.`;
 
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
@@ -133,5 +140,5 @@ async function runDaily() {
   console.log("[Scheduler] Run complete");
 }
 
-// export the function for manual execution (e.g., by Cloud Scheduler)
+// export the function for manual execution
 export { runDaily };
