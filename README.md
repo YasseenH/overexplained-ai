@@ -12,7 +12,7 @@ This is a full-stack newsletter signup system that allows users to subscribe via
   - Generated content is relevant, high-quality, and beautifully formatted.
 - **Pub/Sub Architecture**:
   - Decouples user signup from email delivery.
-  - Uses Google Cloud Pub/Sub (mockable via DI) for event publishing.
+  - Uses Google Cloud Pub/Sub for event publishing.
 - **Resend Integration**:
   - Used to send transactional emails (welcome + confirmation + newsletters).
   - Fully decoupled via a `MailerService` interface.
@@ -136,25 +136,13 @@ npm install
 npm run local
 ```
 
-3. (Optional) Generate Prisma client:
-
-```bash
-npx prisma generate
-```
-
-4. (Optional) Push schema:
-
-```bash
-npx prisma db push
-```
-
 ---
 
 ## Future Enhancements
 
 - User dashboard to manage preferences and topics.
 - Admin panel to view engagement.
-- Scheduled newsletter queue system.
+- AI-Generated Images in the emails.
 - Redis cache for topic content or rate-limiting.
 - User authentication (Magic Link or OAuth).
 
