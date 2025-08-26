@@ -2,6 +2,10 @@
 
 This is a full-stack newsletter signup system that allows users to subscribe via a web form and receive dynamic, AI-generated email content based on their selected topics. The system is designed for scalability, email deliverability, and modern UX.
 
+
+![Demo Video](https://github.com/user-attachments/assets/2b698871-cfbb-4aa5-9457-a68a6ab45d7a)
+
+
 ## Features
 
 - **Email Confirmation Workflow**: Users confirm their email via a secure tokenized link.
